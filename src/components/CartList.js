@@ -22,7 +22,7 @@ function CartList({ finalCart }) {
 			amount: "100",
 			buyer_name: "ajith",
 			email: "a@a.com",
-			phone: "0000000000",
+			phone: "9999999999",
 			user_id: "1232323",
 			redirect_url:
 				"https://afternoon-badlands-78202.herokuapp.com/payment/success",
