@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Table, Row, Col } from "antd";
 import React, { useState } from "react";
 import { Button } from "antd";
 import { connect } from "react-redux";
@@ -7,19 +7,13 @@ import axios from "axios";
 
 function CartList({ finalCart }) {
 	const rowSelection = {
-		onChange: (selectedRowKeys, selectedRows) => {
-			console.log(
-				`selectedRowKeys: ${selectedRowKeys}`,
-				"selectedRows: ",
-				selectedRows
-			);
-		}
+		onChange: (selectedRowKeys, selectedRows) => {}
 	};
 
 	const redirectToPayment = () => {
 		const data = {
 			purpose: "Book payment",
-			amount: "100",
+			amount: totalPrice,
 			buyer_name: "ajith",
 			email: "a@a.com",
 			phone: "9999999999",
@@ -31,7 +25,6 @@ function CartList({ finalCart }) {
 		axios
 			.post("https://afternoon-forest-65061.herokuapp.com/paymentGateway", data)
 			.then(res => {
-				console.log("resp", res.data);
 				window.location.href = res.data;
 			})
 			.catch(error => console.log(error.response.data));
@@ -64,7 +57,7 @@ function CartList({ finalCart }) {
 			key: "price"
 		}
 	];
-
+	const totalPrice = finalCart.reduce((total, v) => total + v.price, 0);
 	return (
 		<div>
 			<Table
@@ -73,6 +66,17 @@ function CartList({ finalCart }) {
 				dataSource={finalCart}
 				pagination={false}
 			/>
+			<Row justify="end" style={{ paddingTop: 20 }}>
+				<Col span={20}></Col>
+				{finalCart.length > 0 && (
+					<Col>
+						<strong style={{ color: "green", padding: 40 }}>
+							{" "}
+							Total Cost: {totalPrice}
+						</strong>
+					</Col>
+				)}
+			</Row>
 			<Button
 				onClick={() => redirectToPayment()}
 				type="primary"

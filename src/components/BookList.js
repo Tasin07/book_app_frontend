@@ -4,6 +4,7 @@ import "./BookList.css";
 import BookCard from "./BookCard";
 
 function BookList(props) {
+	console.log(props.bookList);
 	return (
 		<div className="bookListDiv">
 			<List
@@ -16,7 +17,7 @@ function BookList(props) {
 					xl: 4,
 					xxl: 4
 				}}
-				dataSource={props.bookList.slice(0, 20)}
+				dataSource={props.bookList}
 				renderItem={item => (
 					<List.Item>
 						<BookCard book={item} />

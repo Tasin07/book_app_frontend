@@ -13,7 +13,7 @@ export default function SearchBook(props) {
 				// onFinishFailed={onFinishFailed}
 			>
 				<Form.Item name="searchText">
-					<Input placeholder="Search Books" />
+					<Input value={props.searchInput} placeholder="Search Books" />
 				</Form.Item>
 			</Form>
 		</div>

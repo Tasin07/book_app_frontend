@@ -5,7 +5,6 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { notification } from "antd";
 import "./MainContent.css";
-import { Pagination } from "antd";
 
 notification.config({
 	placement: "bottomRight",
@@ -21,24 +20,19 @@ export default function MainContent(props) {
 	const [searchInput, setSearchInput] = useState("");
 	const [booksList, setBooksList] = useState([]);
 	const [filteredList, setFilteredBookList] = useState([]);
+	const [paginatedResult, setPaginatedResult] = useState([]);
 	const [cartList, setCartList] = useState([]);
 	useEffect(async () => {
 		var apiResult = await axios.get(BOOK_URL);
-		console.log(apiResult);
-		// apiResult.data.sort(
-		// 	(a, b) => parseFloat(b.average_rating) - parseFloat(a.average_rating)
-		// );
 		setBooksList(apiResult.data);
+		console.log(apiResult.data.length);
 		setFilteredBookList(apiResult.data);
+		setPaginatedResult(apiResult.data.slice(0, 20));
 	}, []);
 
 	useEffect(() => {
-		if (cartList.length !== 0) {
-			props.updateCartCount(cartList.length);
-			props.updateCart(cartList);
-			openNotification();
-		}
-	}, [cartList]);
+		setPaginatedResult(filteredList.slice(0, 20));
+	}, [filteredList]);
 
 	const updateCartList = async val => {
 		setCartList([...cartList, val]);
@@ -60,20 +54,26 @@ export default function MainContent(props) {
 		});
 	};
 
+	const setPaginationValue = val => {
+		let paginationResults = filteredList.slice(val * 20 - 20, val * 20);
+		setPaginatedResult(paginationResults);
+	};
+
 	const handleChange = value => {
 		let sortedResult = [];
+
 		if (value === "highRated") {
-			sortedResult = booksList.sort(
+			sortedResult = filteredList.sort(
 				(a, b) => parseFloat(b.average_rating) - parseFloat(a.average_rating)
 			);
 		}
 		if (value === "lowPrice") {
-			sortedResult = booksList.sort(
+			sortedResult = filteredList.sort(
 				(a, b) => parseFloat(a.price) - parseFloat(b.price)
 			);
 		}
 		if (value === "highPrice") {
-			sortedResult = booksList.sort(
+			sortedResult = filteredList.sort(
 				(a, b) => parseFloat(b.price) - parseFloat(a.price)
 			);
 		}
@@ -88,11 +88,12 @@ export default function MainContent(props) {
 			/>
 			<SortBook
 				handleChange={handleChange}
-				bookListLength={filteredList.length / 20}
+				setPaginationValue={setPaginationValue}
+				bookListLength={parseInt(filteredList.length / 2)}
 			/>
 			<BookList
 				className="book-list-style"
-				bookList={filteredList}
+				bookList={paginatedResult}
 				addToCart={updateCartList}
 			/>
 		</div>

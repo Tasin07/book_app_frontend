@@ -59,7 +59,6 @@ const { Meta } = Card;
 
 function BookCard(props) {
 	const book = props.book;
-	console.log(Math.floor(Math.random() * 11));
 	const image_url = images[Math.floor(Math.random() * 11)];
 	let final_url = "";
 	if (!image_url) {
@@ -87,6 +86,7 @@ function BookCard(props) {
 				actions={[
 					<EyeOutlined key="setting" />,
 					<ShoppingCartOutlined
+						style={{ cursor: "pointer" }}
 						onClick={v => handleAddToCart()}
 						key="ellipsis"
 					/>
