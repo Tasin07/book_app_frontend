@@ -1,0 +1,7 @@
+.bookListDiv {
+	padding: 0px 40px;
+	margin-top: 15px;
+	height: 100vh;
+	overflow: scroll;
+	padding-bottom: 300px;
+}
