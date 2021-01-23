@@ -1,6 +1,6 @@
 import { Table, Row, Col } from "antd";
 import React, { useState } from "react";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { connect } from "react-redux";
 import { getCartList } from "../redux/selectors";
 import axios from "axios";
@@ -11,6 +11,7 @@ function CartList({ finalCart }) {
 	};
 
 	const redirectToPayment = () => {
+		var hide = message.loading("Action in progress..", 0);
 		const data = {
 			purpose: "Book payment",
 			amount: totalPrice,
@@ -25,6 +26,7 @@ function CartList({ finalCart }) {
 		axios
 			.post("https://afternoon-forest-65061.herokuapp.com/paymentGateway", data)
 			.then(res => {
+				message.destroy(hide);
 				window.location.href = res.data;
 			})
 			.catch(error => console.log(error.response.data));
