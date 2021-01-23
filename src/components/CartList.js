@@ -60,12 +60,7 @@ function CartList({ finalCart }) {
 	const totalPrice = finalCart.reduce((total, v) => total + v.price, 0);
 	return (
 		<div>
-			<Table
-				columns={columns}
-				rowSelection={rowSelection}
-				dataSource={finalCart}
-				pagination={false}
-			/>
+			<Table columns={columns} dataSource={finalCart} pagination={false} />
 			<Row justify="end" style={{ paddingTop: 20 }}>
 				<Col span={20}></Col>
 				{finalCart.length > 0 && (
