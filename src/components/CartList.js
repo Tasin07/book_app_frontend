@@ -24,11 +24,12 @@ function CartList({ finalCart }) {
 			email: "a@a.com",
 			phone: "0000000000",
 			user_id: "1232323",
-			redirect_url: "http://localhost:3000/payment/success",
+			redirect_url:
+				"https://afternoon-badlands-78202.herokuapp.com/payment/success",
 			webhook_url: "/webhook/"
 		};
 		axios
-			.post("http://localhost:8000/paymentGateway", data)
+			.post("https://afternoon-forest-65061.herokuapp.com/paymentGateway", data)
 			.then(res => {
 				console.log("resp", res.data);
 				window.location.href = res.data;
