@@ -76,6 +76,7 @@ function CartList({ finalCart }) {
 				onClick={() => redirectToPayment()}
 				type="primary"
 				block
+				disabled={finalCart.length === 0}
 				style={{ marginTop: 20 }}
 			>
 				Checkout
