@@ -26,10 +26,10 @@ function CartList({ finalCart }) {
 			amount: totalPrice,
 			buyer_name: "ajith",
 			email: userDetails.email,
-			phone: userDetails.phoneno,
+			phone:
+				userDetails.phoneno.length != 0 ? "1234567890" : userDetails.phoneno,
 			user_id: "1232323",
-			redirect_url:
-				"https://afternoon-badlands-78202.herokuapp.com/payment/success",
+			redirect_url: "https://bookwebcart.herokuapp.com/payment/success",
 			webhook_url: "/webhook/"
 		};
 		axios
