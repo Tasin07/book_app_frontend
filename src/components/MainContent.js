@@ -80,6 +80,10 @@ export default function MainContent(props) {
 		setFilteredBookList([...sortedResult]);
 	};
 
+	const clearSearch = () => {
+		updateSearchResults("");
+	};
+
 	return (
 		<div>
 			<SearchBook
@@ -87,6 +91,7 @@ export default function MainContent(props) {
 				onInputChange={updateSearchResults}
 			/>
 			<SortBook
+				clearSearch={clearSearch}
 				handleChange={handleChange}
 				setPaginationValue={setPaginationValue}
 				bookListLength={parseInt(filteredList.length / 2)}

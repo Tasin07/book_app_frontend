@@ -18,7 +18,7 @@ export default function SortBook(props) {
 	};
 	return (
 		<Row style={{ width: "100%", padding: "0px 40px" }}>
-			<Col span={20}>
+			<Col span={16}>
 				<Pagination
 					current={currentValue}
 					defaultCurrent={1}
@@ -31,9 +31,13 @@ export default function SortBook(props) {
 			</Col>
 
 			<Col justify="end">
-				{/* <Button type="primary" icon={<ClearOutlined />}>
+				<Button
+					type="primary"
+					onClick={e => props.clearSearch()}
+					icon={<ClearOutlined />}
+				>
 					Clear Search
-				</Button> */}
+				</Button>
 				<Select
 					defaultValue="-- Sort Books --"
 					align="right"

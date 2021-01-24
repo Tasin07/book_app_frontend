@@ -5,15 +5,15 @@ export default function SearchBook(props) {
 	const onFinish = val => {
 		props.onInputChange(val.searchText);
 	};
+	const [form] = Form.useForm();
+	form.setFieldsValue({
+		searchText: props.searchInput
+	});
 	return (
 		<div className="searchBoxDiv">
-			<Form
-				name="basic"
-				onFinish={onFinish}
-				// onFinishFailed={onFinishFailed}
-			>
+			<Form name="basic" onFinish={onFinish} form={form}>
 				<Form.Item name="searchText">
-					<Input value={props.searchInput} placeholder="Search Books" />
+					<Input placeholder="Search Books" />
 				</Form.Item>
 			</Form>
 		</div>
