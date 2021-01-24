@@ -56,7 +56,7 @@ function TopNav({ cartLength }) {
 				<Content
 					className="site-layout navContent"
 					style={{
-						padding: "0 50px",
+						padding: "0 20px",
 						marginTop: 64
 					}}
 				>
@@ -80,9 +80,6 @@ function TopNav({ cartLength }) {
 						</Switch>
 					</div>
 				</Content>
-				<Footer style={{ textAlign: "center" }}>
-					Ant Design ©2018 Created by Ant UED
-				</Footer>
 			</Layout>
 		</Router>
 	);

@@ -1,23 +1,32 @@
-import { Table, Row, Col } from "antd";
+import { Table, Row, Col, Input, Modal, Form } from "antd";
 import React, { useState } from "react";
 import { Button, message } from "antd";
 import { connect } from "react-redux";
 import { getCartList } from "../redux/selectors";
 import axios from "axios";
+import "./CartList.css";
 
 function CartList({ finalCart }) {
 	const rowSelection = {
 		onChange: (selectedRowKeys, selectedRows) => {}
 	};
+	const [form] = Form.useForm();
+	const [modalVisible, setModalVisible] = useState(false);
+
+	const handlePayment = async () => {
+		console.log(await form.validateFields());
+		redirectToPayment();
+	};
 
 	const redirectToPayment = () => {
 		var hide = message.loading("Action in progress..", 0);
+		var userDetails = form.getFieldsValue();
 		const data = {
 			purpose: "Book payment",
 			amount: totalPrice,
 			buyer_name: "ajith",
-			email: "a@a.com",
-			phone: "9999999999",
+			email: userDetails.email,
+			phone: userDetails.phoneno,
 			user_id: "1232323",
 			redirect_url:
 				"https://afternoon-badlands-78202.herokuapp.com/payment/success",
@@ -62,7 +71,13 @@ function CartList({ finalCart }) {
 	const totalPrice = finalCart.reduce((total, v) => total + v.price, 0);
 	return (
 		<div>
-			<Table columns={columns} dataSource={finalCart} pagination={false} />
+			<Table
+				scroll={{ x: 1500, y: 300 }}
+				style={{ "table-layout": "fixed" }}
+				columns={columns}
+				dataSource={finalCart}
+				pagination={false}
+			/>
 			<Row justify="end" style={{ paddingTop: 20 }}>
 				<Col span={20}></Col>
 				{finalCart.length > 0 && (
@@ -75,7 +90,7 @@ function CartList({ finalCart }) {
 				)}
 			</Row>
 			<Button
-				onClick={() => redirectToPayment()}
+				onClick={() => setModalVisible(true)}
 				type="primary"
 				block
 				disabled={finalCart.length === 0}
@@ -83,6 +98,42 @@ function CartList({ finalCart }) {
 			>
 				Checkout
 			</Button>
+			<Modal
+				title="Payment Details"
+				centered
+				visible={modalVisible}
+				onOk={() => handlePayment()}
+				onCancel={() => setModalVisible(false)}
+			>
+				<Form name="basic" form={form}>
+					<Form.Item
+						label="Email:"
+						name="email"
+						rules={[
+							{
+								type: "email",
+								required: true,
+								message: "Please input valid email!"
+							}
+						]}
+					>
+						<Input />
+					</Form.Item>
+
+					<Form.Item
+						label="Phone No:"
+						name="phoneno"
+						rules={[
+							{
+								required: true,
+								message: "Please input valid phone number!"
+							}
+						]}
+					>
+						<Input />
+					</Form.Item>
+				</Form>
+			</Modal>
 		</div>
 	);
 }
