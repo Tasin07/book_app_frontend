@@ -8,12 +8,13 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./TopNav.css";
 import { connect } from "react-redux";
 import { getCartLength } from "../redux/selectors";
+
 const { Header, Content, Footer } = Layout;
 
 function TopNav({ cartLength }) {
 	const [cartCount, setCartCount] = useState(0);
 	const [cartValue, setCartValue] = useState([]);
-
+	console.log(window.location.pathname);
 	const updateCartCount = val => {
 		setCartCount(val);
 	};
@@ -21,6 +22,15 @@ function TopNav({ cartLength }) {
 	const updateCart = val => {
 		setCartValue(val);
 	};
+
+	var selectedKeys = "";
+	if (window.location.pathname === "/") {
+		selectedKeys = ["1"];
+	} else if (window.location.pathname === "/cart") {
+		selectedKeys = ["2"];
+	} else {
+		selectedKeys = ["3"];
+	}
 
 	return (
 		<Router>
@@ -30,7 +40,11 @@ function TopNav({ cartLength }) {
 					style={{ position: "fixed", zIndex: 1, width: "100%" }}
 				>
 					<div className="logo" />
-					<Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
+					<Menu
+						theme="dark"
+						mode="horizontal"
+						defaultSelectedKeys={selectedKeys}
+					>
 						<Menu.Item key="1">
 							<Link to="/">Home</Link>
 						</Menu.Item>
@@ -51,6 +65,7 @@ function TopNav({ cartLength }) {
 								</span>
 							</Link>
 						</Menu.Item>
+						<Menu.Item key="3"></Menu.Item>
 					</Menu>
 				</Header>
 				<Content

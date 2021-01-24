@@ -1,4 +1,4 @@
-import { Table, Row, Col, Input, Modal, Form } from "antd";
+import { Table, Row, Col, Input, Modal, Form, InputNumber } from "antd";
 import React, { useState } from "react";
 import { Button, message } from "antd";
 import { connect } from "react-redux";
@@ -125,12 +125,13 @@ function CartList({ finalCart }) {
 						name="phoneno"
 						rules={[
 							{
+								type: "number",
 								required: true,
 								message: "Please input valid phone number!"
 							}
 						]}
 					>
-						<Input />
+						<InputNumber style={{ width: "100%" }} />
 					</Form.Item>
 				</Form>
 			</Modal>
