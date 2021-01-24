@@ -84,7 +84,6 @@ function BookCard(props) {
 				style={{ width: 290 }}
 				cover={<img alt="example" width="50" height="150" src={final_url} />}
 				actions={[
-					<EyeOutlined key="setting" />,
 					<ShoppingCartOutlined
 						style={{ cursor: "pointer" }}
 						onClick={v => handleAddToCart()}
