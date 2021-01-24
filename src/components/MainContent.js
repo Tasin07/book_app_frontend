@@ -17,6 +17,7 @@ const BOOK_URL =
 	"https://s3-ap-southeast-1.amazonaws.com/he-public-data/books8f8fe52.json";
 
 export default function MainContent(props) {
+	console.log("server started");
 	const [searchInput, setSearchInput] = useState("");
 	const [booksList, setBooksList] = useState([]);
 	const [filteredList, setFilteredBookList] = useState([]);
