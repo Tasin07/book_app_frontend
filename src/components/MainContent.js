@@ -3,7 +3,7 @@ import SearchBook from "./SearchBook";
 import SortBook from "./SortBook";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { notification } from "antd";
+import { notification, Spin } from "antd";
 import "./MainContent.css";
 
 notification.config({
@@ -23,8 +23,10 @@ export default function MainContent(props) {
 	const [filteredList, setFilteredBookList] = useState([]);
 	const [paginatedResult, setPaginatedResult] = useState([]);
 	const [cartList, setCartList] = useState([]);
+	const [loading, setLoading] = useState(true);
 	useEffect(async () => {
 		var apiResult = await axios.get(BOOK_URL);
+		setLoading(false);
 		setBooksList(apiResult.data);
 		console.log(apiResult.data.length);
 		setFilteredBookList(apiResult.data);
@@ -87,21 +89,23 @@ export default function MainContent(props) {
 
 	return (
 		<div>
-			<SearchBook
-				searchInput={searchInput}
-				onInputChange={updateSearchResults}
-			/>
-			<SortBook
-				clearSearch={clearSearch}
-				handleChange={handleChange}
-				setPaginationValue={setPaginationValue}
-				bookListLength={parseInt(filteredList.length / 2)}
-			/>
-			<BookList
-				className="book-list-style"
-				bookList={paginatedResult}
-				addToCart={updateCartList}
-			/>
+			<Spin tip="Getting book List..." spinning={loading}>
+				<SearchBook
+					searchInput={searchInput}
+					onInputChange={updateSearchResults}
+				/>
+				<SortBook
+					clearSearch={clearSearch}
+					handleChange={handleChange}
+					setPaginationValue={setPaginationValue}
+					bookListLength={parseInt(filteredList.length / 2)}
+				/>
+				<BookList
+					className="book-list-style"
+					bookList={paginatedResult}
+					addToCart={updateCartList}
+				/>
+			</Spin>
 		</div>
 	);
 }
